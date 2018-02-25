@@ -1,26 +1,77 @@
 'use strict';
 
-var base_scene = require('../hakurei').scene.base;
-var util = require('../hakurei').util;
-var SceneMatching = function(core) {
-	base_scene.apply(this, arguments);
+var Hakurei = require('../hakurei');
+var SceneTitle = function(core) {
+	Hakurei.Scene.Base.apply(this, arguments);
+	this._message = new Hakurei.Object.UI.Text(this, {
+		text: "マッチング中...",
+		textColor: "white",
+		textSize: "32px",
+		textAlign: "center",
+		x: this.width/2,
+		y: 100,
+	});
+
+	this.ui.addSubObjects([
+		this._message
+	]);
+
+	this.setBackgroundColor("black");
+};
+Hakurei.Util.inherit(SceneTitle, Hakurei.Scene.Base);
+
+SceneTitle.prototype.init = function(){
+	Hakurei.Scene.Base.prototype.init.apply(this, arguments);
+
+	this.setFadeIn(60, "black");
+	this.setFadeOut(60, "black");
+
+	// TODO: websocket 実装
+	var self = this;
+	this.core.time_manager.setTimeout(function() {
+		self._message.text("マッチング完了");
+
+		self.core.time_manager.setTimeout(function() {
+			self.core.changeScene("battle");
+		}, 60*1);
+	}, 60*3);
+};
+
+
+SceneTitle.prototype.beforeDraw = function(){
+	Hakurei.Scene.Base.prototype.beforeDraw.apply(this, arguments);
 
 };
-util.inherit(SceneMatching, base_scene);
 
-SceneMatching.prototype.init = function(){
-	base_scene.prototype.init.apply(this, arguments);
+var canvas = document.createElement('canvas');
+var context = canvas.getContext('2d');
+var start = new Date();
+var lines = 16,
+	cW = context.canvas.width,
+	cH = context.canvas.height;
+
+SceneTitle.prototype.draw = function(){
+	Hakurei.Scene.Base.prototype.draw.apply(this, arguments);
+	var ctx = this.core.ctx;
+
+    var rotation = parseInt(((new Date() - start) / 1000) * lines) / lines;
+    context.save();
+    context.clearRect(0, 0, cW, cH);
+    context.translate(cW / 2, cH / 2);
+    context.rotate(Math.PI * 2 * rotation);
+    for (var i = 0; i < lines; i++) {
+
+        context.beginPath();
+        context.rotate(Math.PI * 2 / lines);
+        context.moveTo(cW / 10, 0);
+        context.lineTo(cW / 4, 0);
+        context.lineWidth = cW / 30;
+        context.strokeStyle = "rgba(255, 255, 255," + i / lines + ")";
+        context.stroke();
+    }
+    context.restore();
+
+	ctx.drawImage(canvas, 0,0);
 };
 
-
-SceneMatching.prototype.beforeDraw = function(){
-	base_scene.prototype.beforeDraw.apply(this, arguments);
-
-};
-
-// 画面更新
-SceneMatching.prototype.draw = function(){
-	base_scene.prototype.draw.apply(this, arguments);
-};
-
-module.exports = SceneMatching;
+module.exports = SceneTitle;
