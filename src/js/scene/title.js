@@ -1,26 +1,59 @@
 'use strict';
 
-var base_scene = require('../hakurei').scene.base;
-var util = require('../hakurei').util;
+var Hakurei = require('../hakurei');
 var SceneTitle = function(core) {
-	base_scene.apply(this, arguments);
+	Hakurei.Scene.Base.apply(this, arguments);
 
+	this.ui.addSubObjects([
+		new Hakurei.Object.UI.Text(this, {
+			text: "Portal",
+			textColor: "white",
+			textSize: "100px",
+			textAlign: "center",
+			x: this.width/2,
+			y: 100,
+		}),
+		new Hakurei.Object.UI.Text(this, {
+			text: "Click to Match Battle",
+			textColor: "white",
+			textSize: "48px",
+			textAlign: "center",
+			x: this.width/2,
+			y: 350,
+		})
+		.on("beforedraw", function () {
+			if (this.frame_count % 60 === 0) {
+				if (this.isShow()) {
+					this.hide();
+				}
+				else {
+					this.show();
+				}
+			}
+		})
+	]);
+
+	this.setBackgroundColor("black");
 };
-util.inherit(SceneTitle, base_scene);
+Hakurei.Util.inherit(SceneTitle, Hakurei.Scene.Base);
 
 SceneTitle.prototype.init = function(){
-	base_scene.prototype.init.apply(this, arguments);
+	Hakurei.Scene.Base.prototype.init.apply(this, arguments);
+
+	this.setFadeOut(60, "black");
 };
 
 
 SceneTitle.prototype.beforeDraw = function(){
-	base_scene.prototype.beforeDraw.apply(this, arguments);
+	Hakurei.Scene.Base.prototype.beforeDraw.apply(this, arguments);
 
+	if (this.core.input_manager.isLeftClickPush()) {
+		this.core.changeScene("matching");
+	}
 };
 
-// 画面更新
 SceneTitle.prototype.draw = function(){
-	base_scene.prototype.draw.apply(this, arguments);
+	Hakurei.Scene.Base.prototype.draw.apply(this, arguments);
 };
 
 module.exports = SceneTitle;
