@@ -14,9 +14,9 @@ var SceneTitle = function(core) {
 			y: 100,
 		}),
 		new Hakurei.Object.UI.Text(this, {
-			text: "Click to Match Battle",
+			text: "クリックしてマッチング開始",
 			textColor: "white",
-			textSize: "48px",
+			textSize: "32px",
 			textAlign: "center",
 			x: this.width/2,
 			y: 350,
