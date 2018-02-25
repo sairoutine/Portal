@@ -6,6 +6,7 @@ var SceneMatching     = require('./scene/matching');
 var SceneBattle       = require('./scene/battle');
 var SceneBattleResult = require('./scene/battle_result');
 var AssetsConfig = require('./assets_config');
+var CONSTANT = require('./constant');
 
 var Game = function(canvas) {
 	core.apply(this, arguments);
@@ -20,7 +21,14 @@ Game.prototype.init = function () {
 	this.addScene("battle",        new SceneBattle(this));
 	this.addScene("battle_result", new SceneBattleResult(this));
 
-	this.changeScene("loading", AssetsConfig, "title");
+	if (CONSTANT.DEBUG.START_SCENE) {
+		// デバッグ用
+		this.changeScene.apply(this, ["loading", AssetsConfig].concat(CONSTANT.DEBUG.START_SCENE));
+	}
+	else {
+		// 本番
+		this.changeScene("loading", AssetsConfig, "title");
+	}
 };
 
 module.exports = Game;
