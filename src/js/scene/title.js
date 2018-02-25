@@ -11,7 +11,7 @@ var SceneTitle = function(core) {
 			textSize: "100px",
 			textAlign: "center",
 			x: this.width/2,
-			y: 100,
+			y: 200,
 		}),
 		new Hakurei.Object.UI.Text(this, {
 			text: "クリックしてマッチング開始",
@@ -19,7 +19,7 @@ var SceneTitle = function(core) {
 			textSize: "32px",
 			textAlign: "center",
 			x: this.width/2,
-			y: 350,
+			y: 450,
 		})
 		.on("beforedraw", function () {
 			if (this.frame_count % 60 === 0) {
