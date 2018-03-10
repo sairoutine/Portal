@@ -1,6 +1,8 @@
+'use strict';
 var AssetsConfig = {};
 AssetsConfig.images = {
-	//"black_mist.png":            "./image/black_mist.png",
+	"creature": "./image/creature.png",
+	"plain":    "./image/plain.png",
 };
 
 AssetsConfig.sounds = {
