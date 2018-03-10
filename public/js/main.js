@@ -1,7 +1,9 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+'use strict';
 var AssetsConfig = {};
 AssetsConfig.images = {
-	//"black_mist.png":            "./image/black_mist.png",
+	"creature": "./image/creature.png",
+	"plain":    "./image/plain.png",
 };
 
 AssetsConfig.sounds = {
@@ -30,9 +32,9 @@ module.exports = CONSTANT;
 'use strict';
 var DEBUG = {
 	ON: true,
-	SOUND_OFF: false,
+	SOUND_OFF: true,
 	// 第一引数: scene name, 第二引数以降: 引数
-	START_SCENE: ["matching"],
+	START_SCENE: ["battle"],
 };
 
 module.exports = DEBUG;
@@ -73,7 +75,7 @@ Game.prototype.init = function () {
 
 module.exports = Game;
 
-},{"./assets_config":1,"./constant":2,"./hakurei":5,"./scene/battle":53,"./scene/battle_result":54,"./scene/matching":55,"./scene/title":56}],5:[function(require,module,exports){
+},{"./assets_config":1,"./constant":2,"./hakurei":5,"./scene/battle":54,"./scene/battle_result":55,"./scene/matching":56,"./scene/title":57}],5:[function(require,module,exports){
 'use strict';
 
 module.exports = require("./hakureijs/index");
@@ -1205,7 +1207,7 @@ Core.prototype.setTimeout = function (callback, frame_count) {
 
 module.exports = Core;
 
-},{"./asset_loader/audio":6,"./asset_loader/font":7,"./asset_loader/image":8,"./manager/debug":13,"./manager/input":14,"./manager/save":15,"./manager/time":18,"./scene/loading":43,"./shader/main.fs":45,"./shader/main.vs":46,"./shader_program":47,"./storage/scenario":50,"./util":51,"webgl-debug":29}],12:[function(require,module,exports){
+},{"./asset_loader/audio":6,"./asset_loader/font":7,"./asset_loader/image":8,"./manager/debug":13,"./manager/input":14,"./manager/save":15,"./manager/time":18,"./scene/loading":44,"./shader/main.fs":46,"./shader/main.vs":47,"./shader_program":48,"./storage/scenario":51,"./util":52,"webgl-debug":29}],12:[function(require,module,exports){
 'use strict';
 var Hakurei = {
 	// deprecated namespaces
@@ -1230,7 +1232,6 @@ var Hakurei = {
 		base: require("./object/base"),
 		point: require("./object/point"),
 		sprite: require("./object/sprite"),
-		window: require("./object/window"),
 		sprite3d: require("./object/sprite3d"),
 		pool_manager: require("./object/pool_manager"),
 		pool_manager3d: require("./object/pool_manager3d"),
@@ -1266,15 +1267,16 @@ var Hakurei = {
 		Base: require("./object/base"),
 		Point: require("./object/point"),
 		Sprite: require("./object/sprite"),
-		Window: require("./object/window"),
 		Sprite3d: require("./object/sprite3d"),
 		PoolManager: require("./object/pool_manager"),
 		PoolManager3d: require("./object/pool_manager3d"),
 		UIParts: require("./object/ui_parts"),
 		UI: {
-			Base:    require("./object/ui/base"),
-			Text:    require("./object/ui/text"),
-			Spinner: require("./object/ui/spinner"),
+			Base:            require("./object/ui/base"),
+			Text:            require("./object/ui/text"),
+			Spinner:         require("./object/ui/spinner"),
+			Group:           require("./object/ui/group"),
+			Image:           require("./object/ui/image"),
 		},
 	},
 	AssetLoader: {
@@ -1289,7 +1291,7 @@ var Hakurei = {
 };
 module.exports = Hakurei;
 
-},{"./asset_loader/audio":6,"./asset_loader/font":7,"./asset_loader/image":8,"./constant/button":9,"./core":11,"./manager/save":15,"./manager/scenario":16,"./object/base":31,"./object/point":32,"./object/pool_manager":33,"./object/pool_manager3d":34,"./object/sprite":35,"./object/sprite3d":36,"./object/ui/base":37,"./object/ui/spinner":38,"./object/ui/text":39,"./object/ui_parts":40,"./object/window":41,"./scene/base":42,"./scene/loading":43,"./scene/movie":44,"./shader_program":47,"./storage/base":48,"./storage/save":49,"./util":51}],13:[function(require,module,exports){
+},{"./asset_loader/audio":6,"./asset_loader/font":7,"./asset_loader/image":8,"./constant/button":9,"./core":11,"./manager/save":15,"./manager/scenario":16,"./object/base":31,"./object/point":32,"./object/pool_manager":33,"./object/pool_manager3d":34,"./object/sprite":35,"./object/sprite3d":36,"./object/ui/base":37,"./object/ui/group":38,"./object/ui/image":39,"./object/ui/spinner":40,"./object/ui/text":41,"./object/ui_parts":42,"./scene/base":43,"./scene/loading":44,"./scene/movie":45,"./shader_program":48,"./storage/base":49,"./storage/save":50,"./util":52}],13:[function(require,module,exports){
 'use strict';
 var Util = require("../util");
 
@@ -1513,7 +1515,7 @@ DebugManager.prototype.isShowingCollisionArea = function () {
 
 module.exports = DebugManager;
 
-},{"../util":51}],14:[function(require,module,exports){
+},{"../util":52}],14:[function(require,module,exports){
 'use strict';
 
 var CONSTANT = require("../constant/button");
@@ -1932,7 +1934,7 @@ InputManager.prototype.dumpGamePadKey = function() {
 
 module.exports = InputManager;
 
-},{"../constant/button":9,"../object/point":32,"../util":51}],15:[function(require,module,exports){
+},{"../constant/button":9,"../object/point":32,"../util":52}],15:[function(require,module,exports){
 'use strict';
 // repository for storage save class
 
@@ -2008,9 +2010,6 @@ var ScenarioManager = function (core, option) {
 		printend: function () {},
 	};
 
-	// if scenario is not started, _timeoutID is null.
-	// so that, if scenario is started, _timeoutID always have ID.
-	// NOTE: pausePrintLetter method does not clear _timeoutID.
 	this._timeoutID = null;
 
 	// serif scenario
@@ -2042,9 +2041,6 @@ var ScenarioManager = function (core, option) {
 	this._letter_idx = 0;
 	this._sentences_line_num = 0;
 	this._current_printed_sentences = [];
-
-	// If true, _printLetter method does nothing
-	this._is_pause_print_letter = false;
 };
 Util.inherit(ScenarioManager, BaseClass);
 
@@ -2080,8 +2076,6 @@ ScenarioManager.prototype.init = function (script) {
 	this._letter_idx = 0;
 	this._sentences_line_num = 0;
 	this._current_printed_sentences = [];
-
-	this._is_pause_print_letter = false;
 };
 ScenarioManager.prototype.on = function (event, callback) {
 	this._event_to_callback[event] = callback;
@@ -2263,11 +2257,15 @@ ScenarioManager.prototype._setupSerif = function (script) {
 	// start message
 	this._startPrintLetter();
 };
-
 ScenarioManager.prototype._startPrintLetter = function () {
 	this._printLetter();
 
-	this._timeoutID = setTimeout(Util.bind(this._startPrintLetter, this), this._typography_speed);
+	if (!this.isPrintLetterEnd()) {
+		this._timeoutID = setTimeout(Util.bind(this._startPrintLetter, this), this._typography_speed);
+	}
+	else {
+		this._timeoutID = null;
+	}
 };
 
 ScenarioManager.prototype._stopPrintLetter = function () {
@@ -2279,8 +2277,6 @@ ScenarioManager.prototype._stopPrintLetter = function () {
 
 ScenarioManager.prototype._printLetter = function () {
 	if (this.isPrintLetterEnd()) return;
-
-	if(this._is_pause_print_letter) return;
 
 	var current_message_letter_list = this._current_message_letter_list;
 
@@ -2306,10 +2302,10 @@ ScenarioManager.prototype._printLetter = function () {
 };
 
 ScenarioManager.prototype.resumePrintLetter = function () {
-	this._is_pause_print_letter = false;
+	this._startPrintLetter();
 };
 ScenarioManager.prototype.pausePrintLetter = function () {
-	this._is_pause_print_letter = true;
+	this._stopPrintLetter();
 };
 
 ScenarioManager.prototype.getCurrentPrintedSentences = function () {
@@ -2359,7 +2355,7 @@ ScenarioManager.prototype.getCurrentJunctionList = function () {
 
 module.exports = ScenarioManager;
 
-},{"../util":51,"./serif_abolished_notifier_base":17}],17:[function(require,module,exports){
+},{"../util":52,"./serif_abolished_notifier_base":17}],17:[function(require,module,exports){
 'use strict';
 
 
@@ -10399,7 +10395,7 @@ module.exports = {
 	object_point: ObjectPoint,
 };
 
-},{"../util":51}],31:[function(require,module,exports){
+},{"../util":52}],31:[function(require,module,exports){
 'use strict';
 
 var _base_and_point_classes = require('./_base_and_point_classes');
@@ -10415,9 +10411,9 @@ module.exports = _base_and_point_classes.object_point;
 
 },{"./_base_and_point_classes":30}],33:[function(require,module,exports){
 'use strict';
-
+// TODO: rename manager -> container
 // TODO: add pooling logic
-// TODO: split manager class and pool manager class
+// TODO: split object container class and pool object container class
 var base_object = require('./base');
 var util = require('../util');
 
@@ -10511,11 +10507,12 @@ PoolManager.prototype.removeOutOfStageObjects = function() {
 
 module.exports = PoolManager;
 
-},{"../util":51,"./base":31}],34:[function(require,module,exports){
+},{"../util":52,"./base":31}],34:[function(require,module,exports){
 'use strict';
 
+// TODO: rename manager -> container
 // TODO: add pooling logic
-// TODO: split manager class and pool manager class
+// TODO: split object container class and pool object container class
 var base_object = require('./base');
 var util = require('../util');
 var glmat = require('gl-matrix');
@@ -10752,7 +10749,7 @@ PoolManager3D.prototype.shader = function(){
 
 module.exports = PoolManager3D;
 
-},{"../constant/webgl":10,"../util":51,"./base":31,"gl-matrix":19}],35:[function(require,module,exports){
+},{"../constant/webgl":10,"../util":52,"./base":31,"gl-matrix":19}],35:[function(require,module,exports){
 'use strict';
 var base_object = require('./base');
 var util = require('../util');
@@ -10895,7 +10892,7 @@ Sprite.prototype.alpha = function() {
 
 module.exports = Sprite;
 
-},{"../util":51,"./base":31}],36:[function(require,module,exports){
+},{"../util":52,"./base":31}],36:[function(require,module,exports){
 'use strict';
 var base_object = require('./base');
 var util = require('../util');
@@ -11240,7 +11237,7 @@ Sprite3d.prototype.isReflect = function(){
 
 module.exports = Sprite3d;
 
-},{"../constant/webgl":10,"../util":51,"./base":31,"gl-matrix":19}],37:[function(require,module,exports){
+},{"../constant/webgl":10,"../util":52,"./base":31,"gl-matrix":19}],37:[function(require,module,exports){
 'use strict';
 
 var BaseObject = require('../base');
@@ -11252,8 +11249,9 @@ var ObjectUIBase = function(scene, option) {
 	option = option || {};
 
 	this._default_property = {
-		x: option.x || 0,
-		y: option.y || 0,
+		x:        option.x        || 0,
+		y:        option.y        || 0,
+		children: option.children || [],
 	};
 
 	// event handler
@@ -11261,11 +11259,17 @@ var ObjectUIBase = function(scene, option) {
 		beforedraw: function () {},
 	};
 
+	// children
+	this.objects = this._default_property.children;
+
 	this._show_call_count = 0;
 };
 Util.inherit(ObjectUIBase, BaseObject);
 
 ObjectUIBase.prototype.init = function() {
+	// reset children
+	this.objects = this._default_property.children;
+
 	BaseObject.prototype.init.apply(this, arguments);
 
 	this._show_call_count = 0;
@@ -11289,10 +11293,14 @@ ObjectUIBase.prototype.removeEvent = function (event) {
 	return this;
 };
 
+ObjectUIBase.prototype._callEvent = function (event) {
+	this._event_to_callback[event].apply(this);
+};
+
 ObjectUIBase.prototype.beforeDraw = function() {
 	BaseObject.prototype.beforeDraw.apply(this, arguments);
 
-	this._event_to_callback.beforedraw.apply(this);
+	this._callEvent("beforedraw");
 };
 
 ObjectUIBase.prototype.draw = function() {
@@ -11312,7 +11320,115 @@ ObjectUIBase.prototype.hide = function() {
 
 module.exports = ObjectUIBase;
 
-},{"../../util":51,"../base":31}],38:[function(require,module,exports){
+},{"../../util":52,"../base":31}],38:[function(require,module,exports){
+'use strict';
+
+var BaseObjectUI = require('./base');
+var Util = require('../../util');
+var ObjectUIGroup = function(scene, option) {
+	BaseObjectUI.apply(this, arguments);
+
+	option = option || {};
+
+	this._default_property = Util.assign(this._default_property, {
+		width:           option.width           || 0,
+		height:          option.height          || 0,
+		backgroundColor: option.backgroundColor || null,
+	});
+};
+Util.inherit(ObjectUIGroup, BaseObjectUI);
+
+Util.defineProperty(ObjectUIGroup, "width");
+Util.defineProperty(ObjectUIGroup, "height");
+Util.defineProperty(ObjectUIGroup, "backgroundColor");
+
+ObjectUIGroup.prototype.init = function() {
+	BaseObjectUI.prototype.init.apply(this, arguments);
+
+	this.width(this._default_property.width);
+	this.height(this._default_property.height);
+	this.backgroundColor(this._default_property.backgroundColor);
+};
+
+ObjectUIGroup.prototype.beforeDraw = function() {
+	BaseObjectUI.prototype.beforeDraw.apply(this, arguments);
+
+};
+
+ObjectUIGroup.prototype.draw = function() {
+	if (!this.isShow()) return;
+	BaseObjectUI.prototype.draw.apply(this, arguments);
+
+	var ctx = this.core.ctx;
+
+	if (this.backgroundColor()) {
+		ctx.save();
+		ctx.fillStyle = this.backgroundColor();
+		ctx.fillRect(this.x(), this.y(), this.width(), this.height());
+		ctx.restore();
+	}
+};
+
+
+module.exports = ObjectUIGroup;
+
+},{"../../util":52,"./base":37}],39:[function(require,module,exports){
+'use strict';
+
+var BaseObjectUI = require('./base');
+var Util = require('../../util');
+var ObjectUIImage = function(scene, option) {
+	BaseObjectUI.apply(this, arguments);
+
+	option = option || {};
+
+	this._default_property = Util.assign(this._default_property, {
+		image_name: option.image_name || null,
+		scale:      option.scale      || 1,
+	});
+};
+Util.inherit(ObjectUIImage, BaseObjectUI);
+
+Util.defineProperty(ObjectUIImage, "image_name");
+Util.defineProperty(ObjectUIImage, "scale");
+
+ObjectUIImage.prototype.init = function() {
+	BaseObjectUI.prototype.init.apply(this, arguments);
+
+	this.image_name(this._default_property.image_name);
+	this.scale(this._default_property.scale);
+};
+
+ObjectUIImage.prototype.beforeDraw = function() {
+	BaseObjectUI.prototype.beforeDraw.apply(this, arguments);
+
+};
+
+ObjectUIImage.prototype.draw = function() {
+	if (!this.isShow()) return;
+	BaseObjectUI.prototype.draw.apply(this, arguments);
+
+	var image = this.core.image_loader.getImage(this.image_name());
+	var width  = image.width  * this.scale();
+	var height = image.height * this.scale();
+	var ctx = this.core.ctx;
+	ctx.save();
+	ctx.translate(this.x(), this.y());
+	ctx.drawImage(image,
+		//-width/2,
+		//-height/2,
+		0,
+		0,
+		width,
+		height
+	);
+	ctx.restore();
+};
+
+
+module.exports = ObjectUIImage;
+
+},{"../../util":52,"./base":37}],40:[function(require,module,exports){
 'use strict';
 
 var LINES = 16;
@@ -11376,7 +11492,7 @@ ObjectUISpinner.prototype.draw = function() {
 
 module.exports = ObjectUISpinner;
 
-},{"../../util":51,"./base":37}],39:[function(require,module,exports){
+},{"../../util":52,"./base":37}],41:[function(require,module,exports){
 'use strict';
 
 var BaseObjectUI = require('./base');
@@ -11431,8 +11547,10 @@ ObjectUIText.prototype.draw = function() {
 
 module.exports = ObjectUIText;
 
-},{"../../util":51,"./base":37}],40:[function(require,module,exports){
+},{"../../util":52,"./base":37}],42:[function(require,module,exports){
 'use strict';
+// deprecated. use ui objects
+
 var base_object = require('./base');
 var Util = require('../util');
 
@@ -11505,60 +11623,7 @@ ObjectUIParts.prototype.draw = function(){
 
 module.exports = ObjectUIParts;
 
-},{"../util":51,"./base":31}],41:[function(require,module,exports){
-'use strict';
-
-var base_object = require('./base');
-var util = require('../util');
-
-var Window = function(scene, Class) {
-	base_object.apply(this, arguments);
-
-	this._width = 0;
-	this._height = 0;
-};
-util.inherit(Window, base_object);
-
-Window.prototype.init = function() {
-	base_object.prototype.init.apply(this, arguments);
-
-	this._width = 0;
-	this._height = 0;
-};
-
-Window.prototype.beforeDraw = function(){
-	base_object.prototype.beforeDraw.apply(this, arguments);
-};
-
-Window.prototype.draw = function(){
-	base_object.prototype.draw.apply(this, arguments);
-};
-
-Window.prototype.setSize = function(width, height){
-	this._width = width;
-	this._height = height;
-};
-
-Window.prototype.collisionWidth = function(){
-	return this._width;
-};
-Window.prototype.collisionHeight = function(){
-	return this._height;
-};
-Window.prototype.width = function() {
-	return this._width;
-};
-Window.prototype.height = function() {
-	return this._height;
-};
-
-
-
-
-
-module.exports = Window;
-
-},{"../util":51,"./base":31}],42:[function(require,module,exports){
+},{"../util":52,"./base":31}],43:[function(require,module,exports){
 'use strict';
 var ObjectBase = require("../object/base");
 var Util = require('../util');
@@ -11602,7 +11667,7 @@ var SceneBase = function(core) {
 
 	// UI view
 	this.ui = new UI(this);
-	this.addObject(this.ui);
+	this.addObject(this.ui); // TODO: draw after all objects drawed
 };
 
 SceneBase.prototype.init = function(){
@@ -11902,7 +11967,7 @@ Util.inherit(UI, ObjectBase);
 module.exports = SceneBase;
 
 
-},{"../object/base":31,"../util":51}],43:[function(require,module,exports){
+},{"../object/base":31,"../util":52}],44:[function(require,module,exports){
 'use strict';
 
 // loading scene
@@ -11977,7 +12042,7 @@ SceneLoading.prototype.notifyAllLoaded = function(){
 
 module.exports = SceneLoading;
 
-},{"../util":51,"./base":42}],44:[function(require,module,exports){
+},{"../util":52,"./base":43}],45:[function(require,module,exports){
 'use strict';
 
 // movie scene
@@ -12108,15 +12173,15 @@ SceneMovie.prototype.notifyEnd = function(){
 
 module.exports = SceneMovie;
 
-},{"../util":51,"./base":42}],45:[function(require,module,exports){
+},{"../util":52,"./base":43}],46:[function(require,module,exports){
 
 module.exports = "attribute vec3 aVertexPosition;\nattribute vec2 aTextureCoordinates;\nattribute vec4 aColor;\n\nuniform mat4 uMVMatrix;\nuniform mat4 uPMatrix;\nvarying vec2 vTextureCoordinates;\nvarying vec4 vColor;\n\nvoid main() {\n\tgl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);\n\tvTextureCoordinates = aTextureCoordinates;\n\tvColor = aColor;\n}\n\n";
 
-},{}],46:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 
 module.exports = "precision mediump float;\nuniform sampler2D uSampler;\nvarying vec2 vTextureCoordinates;\nvarying vec4 vColor;\n\nvoid main() {\n\tvec4 textureColor = texture2D(uSampler, vTextureCoordinates);\n\tgl_FragColor = textureColor * vColor;\n}\n\n";
 
-},{}],47:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 'use strict';
 var glmat = require("gl-matrix");
 
@@ -12187,7 +12252,7 @@ ShaderProgram.prototype.createShaderProgram = function(gl, vertex_shader, fragme
 
 module.exports = ShaderProgram;
 
-},{"gl-matrix":19}],48:[function(require,module,exports){
+},{"gl-matrix":19}],49:[function(require,module,exports){
 'use strict';
 /* eslint-disable new-cap */
 
@@ -12400,7 +12465,7 @@ StorageBase.prototype._removeWebStorage = function() {
 
 module.exports = StorageBase;
 
-},{"../util":51}],49:[function(require,module,exports){
+},{"../util":52}],50:[function(require,module,exports){
 'use strict';
 var base_class = require('./base');
 var util = require('../util');
@@ -12426,7 +12491,7 @@ StorageSave.KEY = function(){
 
 module.exports = StorageSave;
 
-},{"../util":51,"./base":48}],50:[function(require,module,exports){
+},{"../util":52,"./base":49}],51:[function(require,module,exports){
 'use strict';
 var base_class = require('./base');
 var util = require('../util');
@@ -12474,7 +12539,7 @@ StorageScenario.prototype.incrementPlayedCount = function(id){
 
 module.exports = StorageScenario;
 
-},{"../util":51,"./base":48}],51:[function(require,module,exports){
+},{"../util":52,"./base":49}],52:[function(require,module,exports){
 'use strict';
 var Util = {
 	inherit: function( child, parent ) {
@@ -12623,7 +12688,7 @@ var Util = {
 
 module.exports = Util;
 
-},{}],52:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 'use strict';
 var Game = require('./game');
 
@@ -12646,35 +12711,100 @@ if(window.require) {
 	window.require('electron').webFrame.setVisualZoomLevelLimits(1,1); // unable to zoom
 }
 
-},{"./game":4}],53:[function(require,module,exports){
+},{"./game":4}],54:[function(require,module,exports){
 'use strict';
 
-var base_scene = require('../hakurei').scene.base;
-var util = require('../hakurei').util;
+var Hakurei = require('../hakurei');
 var SceneBattle = function(core) {
-	base_scene.apply(this, arguments);
+	Hakurei.Scene.Base.apply(this, arguments);
+	this.ui.addSubObjects([
+		// 左サイドバー
+		new Hakurei.Object.UI.Group(this, {
+			x: 0,
+			y: 0,
+			width: 100,
+			height: this.height,
+			backgroundColor: "black",
+			// TODO:
+			children: [],
+		}),
+		// 上 対戦相手フィールド
+		new Hakurei.Object.UI.Group(this, {
+			x: 100,
+			y: 0,
+			width: this.width - 100,
+			height: (this.height-100)/2,
+			backgroundColor: "red",
+			// カード一覧
+			children: [],
+		}),
+		// 中 自分フィールド
+		new Hakurei.Object.UI.Group(this, {
+			x: 100,
+			y: (this.height-100)/2,
+			width: this.width - 100,
+			height: this.height-100,
+			backgroundColor: "green",
+			// カード一覧
+			// TODO:
+			children: [
+				// カード画像
+				// クリーチャー
+				new Hakurei.Object.UI.Image(this, {
+					x: 300,
+					y: 100,
+					image_name: "creature",
+					scale: 0.25,
+				}),
+				new Hakurei.Object.UI.Image(this, {
+					x: 400,
+					y: 100,
+					image_name: "creature",
+					scale: 0.25,
+				}),
+				// 土地
+				new Hakurei.Object.UI.Image(this, {
+					x: 300,
+					y: 0,
+					image_name: "plain",
+					scale: 0.25,
+				}),
 
+			],
+		}),
+		// 下 自分 手札
+		new Hakurei.Object.UI.Group(this, {
+			x: 100,
+			y: this.height-100,
+			width: this.width - 100,
+			height: 100,
+			backgroundColor: "blue",
+			// カード一覧
+			children: [],
+		})
+	]);
+
+	this.setBackgroundColor("white");
 };
-util.inherit(SceneBattle, base_scene);
+Hakurei.Util.inherit(SceneBattle, Hakurei.Scene.Base);
 
 SceneBattle.prototype.init = function(){
-	base_scene.prototype.init.apply(this, arguments);
+	Hakurei.Scene.Base.prototype.init.apply(this, arguments);
 };
 
 
 SceneBattle.prototype.beforeDraw = function(){
-	base_scene.prototype.beforeDraw.apply(this, arguments);
+	Hakurei.Scene.Base.prototype.beforeDraw.apply(this, arguments);
 
 };
 
-// 画面更新
 SceneBattle.prototype.draw = function(){
-	base_scene.prototype.draw.apply(this, arguments);
+	Hakurei.Scene.Base.prototype.draw.apply(this, arguments);
 };
 
 module.exports = SceneBattle;
 
-},{"../hakurei":5}],54:[function(require,module,exports){
+},{"../hakurei":5}],55:[function(require,module,exports){
 'use strict';
 
 var base_scene = require('../hakurei').scene.base;
@@ -12702,7 +12832,7 @@ SceneBattleResult.prototype.draw = function(){
 
 module.exports = SceneBattleResult;
 
-},{"../hakurei":5}],55:[function(require,module,exports){
+},{"../hakurei":5}],56:[function(require,module,exports){
 'use strict';
 
 var Hakurei = require('../hakurei');
@@ -12760,7 +12890,7 @@ SceneTitle.prototype.draw = function(){
 
 module.exports = SceneTitle;
 
-},{"../hakurei":5}],56:[function(require,module,exports){
+},{"../hakurei":5}],57:[function(require,module,exports){
 'use strict';
 
 var Hakurei = require('../hakurei');
@@ -12774,7 +12904,7 @@ var SceneTitle = function(core) {
 			textSize: "100px",
 			textAlign: "center",
 			x: this.width/2,
-			y: 100,
+			y: 200,
 		}),
 		new Hakurei.Object.UI.Text(this, {
 			text: "クリックしてマッチング開始",
@@ -12782,7 +12912,7 @@ var SceneTitle = function(core) {
 			textSize: "32px",
 			textAlign: "center",
 			x: this.width/2,
-			y: 350,
+			y: 450,
 		})
 		.on("beforedraw", function () {
 			if (this.frame_count % 60 === 0) {
@@ -12821,4 +12951,4 @@ SceneTitle.prototype.draw = function(){
 
 module.exports = SceneTitle;
 
-},{"../hakurei":5}]},{},[52]);
+},{"../hakurei":5}]},{},[53]);
