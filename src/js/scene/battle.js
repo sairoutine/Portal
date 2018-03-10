@@ -20,7 +20,7 @@ var SceneBattle = function(core) {
 			y: 0,
 			width: this.width - 100,
 			height: (this.height-100)/2,
-			backgroundColor: "black",
+			backgroundColor: "red",
 			// カード一覧
 			children: [],
 		}),
@@ -30,15 +30,32 @@ var SceneBattle = function(core) {
 			y: (this.height-100)/2,
 			width: this.width - 100,
 			height: this.height-100,
-			backgroundColor: "black",
+			backgroundColor: "green",
 			// カード一覧
+			// TODO:
 			children: [
 				// カード画像
+				// クリーチャー
 				new Hakurei.Object.UI.Image(this, {
-					x: 100,
-					y: (this.height-100)/2,
+					x: 300,
+					y: 100,
 					image_name: "creature",
+					scale: 0.25,
 				}),
+				new Hakurei.Object.UI.Image(this, {
+					x: 400,
+					y: 100,
+					image_name: "creature",
+					scale: 0.25,
+				}),
+				// 土地
+				new Hakurei.Object.UI.Image(this, {
+					x: 300,
+					y: 0,
+					image_name: "plain",
+					scale: 0.25,
+				}),
+
 			],
 		}),
 		// 下 自分 手札
@@ -47,7 +64,7 @@ var SceneBattle = function(core) {
 			y: this.height-100,
 			width: this.width - 100,
 			height: 100,
-			backgroundColor: "black",
+			backgroundColor: "blue",
 			// カード一覧
 			children: [],
 		})
