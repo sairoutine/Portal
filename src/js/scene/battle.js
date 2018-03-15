@@ -6,8 +6,8 @@ var SceneBattle = function(core) {
 	this.ui.addSubObjects([
 		// 左サイドバー
 		new Hakurei.Object.UI.Group(this, {
-			x: 0,
-			y: 0,
+			x: 100/2,
+			y: this.height/2,
 			width: 100,
 			height: this.height,
 			backgroundColor: "black",
@@ -16,8 +16,8 @@ var SceneBattle = function(core) {
 		}),
 		// 上 対戦相手フィールド
 		new Hakurei.Object.UI.Group(this, {
-			x: 100,
-			y: 0,
+			x: 100 + (this.width-100)/2,
+			y: (this.height-100)/2/2,
 			width: this.width - 100,
 			height: (this.height-100)/2,
 			backgroundColor: "red",
@@ -26,8 +26,8 @@ var SceneBattle = function(core) {
 		}),
 		// 中 自分フィールド
 		new Hakurei.Object.UI.Group(this, {
-			x: 100,
-			y: (this.height-100)/2,
+			x: 100 + (this.width - 100)/2,
+			y: (this.height-100)/2 + (this.height-100)/2,
 			width: this.width - 100,
 			height: this.height-100,
 			backgroundColor: "green",
@@ -38,30 +38,30 @@ var SceneBattle = function(core) {
 				// クリーチャー
 				new Hakurei.Object.UI.Image(this, {
 					x: 300,
-					y: 100,
+					y: 150,
 					image_name: "creature",
 					scale: 0.25,
 				}),
 				new Hakurei.Object.UI.Image(this, {
 					x: 400,
-					y: 100,
+					y: 150,
 					image_name: "creature",
 					scale: 0.25,
 				}),
 				// 土地
 				new Hakurei.Object.UI.Image(this, {
 					x: 300,
-					y: 0,
+					y: 50,
 					image_name: "plain",
 					scale: 0.25,
-				}),
+				}).on("click", this._showDetailCard.bind(this)),
 
 			],
 		}),
 		// 下 自分 手札
 		new Hakurei.Object.UI.Group(this, {
-			x: 100,
-			y: this.height-100,
+			x: 100 + (this.width-100)/2,
+			y: this.height-100 + 100/2,
 			width: this.width - 100,
 			height: 100,
 			backgroundColor: "blue",
@@ -87,5 +87,11 @@ SceneBattle.prototype.beforeDraw = function(){
 SceneBattle.prototype.draw = function(){
 	Hakurei.Scene.Base.prototype.draw.apply(this, arguments);
 };
+
+SceneBattle.prototype._showDetailCard = function(){
+	console.log("test");
+};
+
+
 
 module.exports = SceneBattle;
